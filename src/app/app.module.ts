@@ -1,16 +1,15 @@
+import { GarbageService } from './services/garbage.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { GarbageItemComponent } from './components/gabage-item/garbage-item.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, GarbageItemComponent],
+  imports: [BrowserModule, HttpClientModule],
+  providers: [GarbageService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
