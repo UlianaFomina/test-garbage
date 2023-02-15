@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs';
-import { GarbageService } from './../../services/garbage.service';
-import { IGarbageModel } from './../../models/garbage.model';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IGarbageModel } from 'src/app/models/garbage.model';
 
 @Component({
   selector: 'app-garbage-item',
@@ -13,13 +11,7 @@ export class GarbageItemComponent {
 
   @Output() deleteItem: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(
-    private garbageServiceApi: GarbageService,
-    public ChangeDetectorRef: ChangeDetectorRef
-  ) {}
-
   handleRemove(id: string) {
     this.deleteItem.emit(id);
   }
-  details = false;
 }

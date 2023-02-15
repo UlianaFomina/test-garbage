@@ -1,13 +1,13 @@
-import { GarbageService } from './services/garbage.service';
-import { IGarbageModel } from './models/garbage.model';
 import { Component, OnInit} from '@angular/core';
+import { IGarbageModel } from 'src/app/models/garbage.model';
+
+import { GarbageService } from 'src/app/services/garbage.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './main.component.html',
 })
-export class AppComponent implements OnInit {
+export class MainComponent implements OnInit {
   title = 'test-garbage';
   result: any;
   garbageItems!: IGarbageModel[];
