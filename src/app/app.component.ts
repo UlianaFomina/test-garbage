@@ -1,23 +1,23 @@
 import { GarbageService } from './services/garbage.service';
 import { IGarbageModel } from './models/garbage.model';
-import { Component } from '@angular/core';
-import { Observable, subscribeOn } from 'rxjs';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'test-garbage';
   result: any;
-  garbageItems$: Observable<IGarbageModel[]> | undefined;
+  garbageItems!: IGarbageModel[];
   id: string = '';
   body: object = {
     name: 'name1',
     link: 'link1',
     comment: 'comment1',
-    tags: ['tag1'],
+    tags: ['tag1', 'tag2', 'tag3'],
   };
   body1: object = {
     createdAt: '2',
@@ -28,26 +28,25 @@ export class AppComponent {
     tags: ['imtag'],
   };
 
-  constructor(private GarbageService: GarbageService) {}
+  constructor(private garbageServiceApi: GarbageService) {}
 
   ngOnInit(): void {
     //this.GarbageService.postGarbage(this.body).subscribe((el) => {
-    //this.result = el;
-    //});
+    // this.result = el;
+    // });
     //console.log(this.result);
-    this.garbageItems$ = this.GarbageService.getAll();
-    this.garbageItems$.subscribe((e) => {
-      // this.GarbageService.removeById(e[0].id).subscribe(deleted => {
-      //  console.log(`Data with id: ${e[0].id} has been deleted..`)
-      //});
-      this.GarbageService.updateById(e[0].id, this.body1).subscribe(
-        (updated) => {
-          console.log(e[0].comment);
-        }
-      );
-    });
-    this.garbageItems$.subscribe((e) => {
-      console.log(e);
+
+    this.garbageServiceApi.getAll().subscribe(allGarbages => {
+      this.garbageItems = allGarbages
     });
   }
+
+  removeItem(id: string){
+    this.garbageServiceApi.removeById(id).subscribe(() => {
+      this.garbageServiceApi.getAll().subscribe(garbages => {
+        this.garbageItems = garbages
+      })
+    })
+  }
+
 }

@@ -1,2 +1,18 @@
-<h1>hiiiii</h1>
-<app-garbage-item></app-garbage-item>
+<div class="container-fluid p-0">
+  <app-header></app-header>
+  <div class="d-flex flex-row align-items-start p-1 pt-5 pb-5">
+    <div class="d-flex flex-column-reverse w-50">
+      <app-garbage-item
+      class=""
+      *ngFor="let item of garbageItems"
+      [item]="item"
+      (deleteItem)="removeItem($event)"
+    >
+    </app-garbage-item>
+    </div>
+    <div class="d-flex flex-column align-items-center justify-content-center w-50 fixed-top start-50 pt-2 mt-5">
+      <img src="../assets/mainImg.png" alt="img" class="w-75"/>
+      <button class="w-50 btn btn-secondary pt-3 pb-3">CREATE NEW GARBAGE</button>
+    </div>
+  </div>
+</div>
