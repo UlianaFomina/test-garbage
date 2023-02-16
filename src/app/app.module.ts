@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { GarbageService } from './services/garbage.service';
 
 import { AppComponent } from './app.component';
-
 import { PostGarbageFormComponent } from './components/post-garbage-form-component/post-garbage-form.component';
-
 import { MainComponent } from './components/main/main.component';
 import { GarbageItemComponent } from './components/gabage-item/garbage-item.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -17,9 +17,14 @@ import { HeaderComponent } from './components/header/header.component';
     GarbageItemComponent,
     HeaderComponent,
     PostGarbageFormComponent,
-    MainComponent
+    MainComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+  ],
   providers: [GarbageService],
   bootstrap: [AppComponent],
 })
