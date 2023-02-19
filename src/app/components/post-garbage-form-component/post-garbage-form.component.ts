@@ -1,67 +1,57 @@
+import { FormService } from './../../services/form.service';
 import { GarbageService } from './../../services/garbage.service';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-form',
   templateUrl: './post-garbage-form.component.html',
 })
-export class PostGarbageFormComponent {
+export class PostGarbageFormComponent{
   postGarbageForm!: FormGroup;
   countOfTags: number = 1;
+  formsControl!: FormArray
 
   constructor(
-    private FormBuilder: FormBuilder,
+    private FormService: FormService,
     private GarbageServiceApi: GarbageService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initForm();
   }
 
   initForm() {
     this.postGarbageForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      link: new FormControl('', Validators.required),
-      comment: new FormControl(''),
+      link: new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'
+        ),
+      ]),
+      comment: new FormControl('', Validators.required),
       tags: new FormArray([new FormControl('', Validators.required)]),
     });
+    this.formsControl = this.FormService.getFormsControls(this.postGarbageForm, "tags")
   }
 
   onSubmit() {
-    const controls = this.postGarbageForm.controls;
-
-    if (this.postGarbageForm.invalid) {
-      Object.keys(controls).forEach((controlName) =>
-        controls[controlName].markAsTouched()
+    if(this.FormService.isControlsValid(this.postGarbageForm)){
+      this.GarbageServiceApi.postGarbage(this.postGarbageForm.value).subscribe(
+        (el) => {
+          this.router.navigate(['']);
+        }
       );
-      return;
     }
-    this.GarbageServiceApi.postGarbage(this.postGarbageForm.value).subscribe(
-      (el) => {
-        this.router.navigate(['']);
-      }
-    );
-  }
-
-  getFormsControls(): FormArray {
-    return this.postGarbageForm.controls['tags'] as FormArray;
   }
   addTag() {
-    (<FormArray>this.postGarbageForm.controls['tags']).push(
-      new FormControl('', Validators.required)
-    );
+    this.FormService.addControl(this.postGarbageForm,'tags')
     this.countOfTags++;
   }
   removeTag(i: number) {
-    (<FormArray>this.postGarbageForm.controls['tags']).removeAt(i);
+    this.FormService.removeControl(this.postGarbageForm, 'tags', i)
     this.countOfTags--;
   }
 }

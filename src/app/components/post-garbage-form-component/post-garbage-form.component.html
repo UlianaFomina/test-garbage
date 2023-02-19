@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center p-4">
   <form
-    class="w-50 pt-5 needs-validation was-validated"
+    class="w-50 pt-5"
     novalidate="true"
     [formGroup]="postGarbageForm"
     (submit)="onSubmit()"
@@ -15,7 +15,6 @@
           class="form-control form-control-lg"
           type="text"
           formControlName="name"
-          required="true"
         />
       </div>
       <div class="input-group w-50">
@@ -24,19 +23,18 @@
           class="form-control form-control-lg"
           type="text"
           formControlName="link"
-          required="true"
         />
       </div>
     </div>
     <div class="mb-3 mt-4">
-      <div class="input-group">
+      <div class="input-group w-100">
         <label class="input-group-text">Comment</label>
         <textarea
           class="form-control"
-          rows="3"
+          formControlName="comment"
+          rows="4"
           maxlength="200"
           style="resize: none"
-          required="true"
         ></textarea>
       </div>
       <p class="text-secondary">max 200 simbols</p>
@@ -45,23 +43,24 @@
       <div
         class="d-flex align-items-center justify-content-center"
         formArrayName="tags"
-        *ngFor="let tag of getFormsControls()['controls']; let i = index"
+        *ngFor="let tag of formsControl['controls']; let i = index"
       >
         <label class="p-3">Tag: </label>
         <input
           class="form-control form-control-lg w-50"
           type="text"
           formControlName="{{ i }}"
-          required="true"
         />
         <button
           [ngClass]="{ 'd-none': countOfTags >= 4 || i != 0 }"
+          type="button"
           class="btn btn-default"
           (click)="addTag()"
         >
           +
         </button>
         <button
+          type="button"
           [ngClass]="{ 'd-none': countOfTags < 4 && i === 0 }"
           class="btn btn-default"
           (click)="removeTag(i)"
