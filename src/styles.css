@@ -11,10 +11,13 @@ h5 {
   margin: 0;
 }
 input.ng-touched.ng-invalid,
-textarea.ng-touched.ng-invalid{
+textarea.ng-touched.ng-invalid {
   border: 2px solid red;
 }
 input.ng-valid,
-textarea.ng-valid{
+textarea.ng-valid {
   border: 2px solid green;
+}
+.svg-active path {
+  fill: #f5e169;
 }

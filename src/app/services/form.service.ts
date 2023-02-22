@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -23,17 +22,18 @@ export class FormService {
     );
   }
 
-  removeControl(formGroup: FormGroup, name: string,i: number) {
+  removeControl(formGroup: FormGroup, name: string, i: number) {
     (<FormArray>formGroup.controls['tags']).removeAt(i);
   }
-  isControlsValid(formGroup: FormGroup): boolean{
+
+  isControlsValid(formGroup: FormGroup): boolean {
     const controls = formGroup.controls;
     if (formGroup.invalid) {
-        Object.keys(controls).forEach((controlName) => {
-          controls[controlName].markAsTouched();
-          controls[controlName].markAllAsTouched();
-        });
-     return false;
+      Object.keys(controls).forEach((controlName) => {
+        controls[controlName].markAsTouched();
+        controls[controlName].markAllAsTouched();
+      });
+      return false;
     }
     return true;
   }

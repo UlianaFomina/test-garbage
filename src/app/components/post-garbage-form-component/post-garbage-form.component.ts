@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
   selector: 'app-form',
   templateUrl: './post-garbage-form.component.html',
 })
-export class PostGarbageFormComponent{
+export class PostGarbageFormComponent {
   postGarbageForm!: FormGroup;
   countOfTags: number = 1;
-  formsControl!: FormArray
+  formsControl!: FormArray;
 
   constructor(
     private FormService: FormService,
@@ -34,11 +34,14 @@ export class PostGarbageFormComponent{
       comment: new FormControl('', Validators.required),
       tags: new FormArray([new FormControl('', Validators.required)]),
     });
-    this.formsControl = this.FormService.getFormsControls(this.postGarbageForm, "tags")
+    this.formsControl = this.FormService.getFormsControls(
+      this.postGarbageForm,
+      'tags'
+    );
   }
 
   onSubmit() {
-    if(this.FormService.isControlsValid(this.postGarbageForm)){
+    if (this.FormService.isControlsValid(this.postGarbageForm)) {
       this.GarbageServiceApi.postGarbage(this.postGarbageForm.value).subscribe(
         (el) => {
           this.router.navigate(['']);
@@ -47,11 +50,11 @@ export class PostGarbageFormComponent{
     }
   }
   addTag() {
-    this.FormService.addControl(this.postGarbageForm,'tags')
+    this.FormService.addControl(this.postGarbageForm, 'tags');
     this.countOfTags++;
   }
   removeTag(i: number) {
-    this.FormService.removeControl(this.postGarbageForm, 'tags', i)
+    this.FormService.removeControl(this.postGarbageForm, 'tags', i);
     this.countOfTags--;
   }
 }
