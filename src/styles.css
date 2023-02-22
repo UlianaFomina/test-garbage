@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  min-height: 100%;
+  background-color: #80ced6;
+}
+h2,
+h3,
+h4,
+h5 {
+  color: #50394c;
+  max-width: 100%;
+  margin: 0;
+}
+input.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid {
+  border: 2px solid red;
+}
+input.ng-valid,
+textarea.ng-valid {
+  border: 2px solid green;
+}
+.svg-active path {
+  fill: #f5e169;
+}
